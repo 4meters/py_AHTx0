@@ -28,7 +28,7 @@ class AHTx0:
             self, port: int, address: int = AHTX0_I2CADDR_DEFAULT
     ) -> None:
         time.sleep(0.02)  # 20ms delay to wake up
-        self.address = address
+        self.address = int(address)
         self.bus = smbus2.SMBus(port)
         self._buf = bytearray(6)
         self.reset()
