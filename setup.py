@@ -34,7 +34,7 @@ setup(
     license="MIT",
     keywords=["raspberry pi", "orange pi", "banana pi", "rpi", "AHT10", "AHT20", "i2c", "temperature", "humidity"],
     packages=['py_AHTx0'],
-    install_requires=["pytz", "smbus2"],
+    install_requires=["smbus2"],
     setup_requires=pytest_runner,
     tests_require=test_deps,
     python_requires=">=3.6, <4",
