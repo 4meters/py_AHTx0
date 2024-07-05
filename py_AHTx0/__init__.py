@@ -28,7 +28,7 @@ class AHTx0:
             self, port: int, address: int = AHTX0_I2CADDR_DEFAULT
     ) -> None:
         time.sleep(0.02)  # 20ms delay to wake up
-        self.address = int(address)
+        self.address = address
         self.bus = smbus2.SMBus(port)
         self._buf = bytearray(6)
         self.reset()
@@ -41,7 +41,6 @@ class AHTx0:
         """Perform a soft-reset of the AHT"""
         self._buf[0] = AHTX0_CMD_SOFTRESET
         self.bus.write_block_data(self.address, 0, self._buf[:1])
-        #bus.write(self._buf, start=0, end=1)
         time.sleep(0.02)  # 20ms delay to wake up
 
 
@@ -53,7 +52,7 @@ class AHTx0:
         calibration_failed = False
         try:
             # Newer AHT20's may not succeed with old command, so wrapping in try/except
-            self.bus.write_block_data(self.address, int(0), self._buf[:3])
+            self.bus.write_block_data(self.address, 0x0, self._buf[:3])
         except (RuntimeError, OSError):
             calibration_failed = True
 
@@ -63,7 +62,7 @@ class AHTx0:
             time.sleep(0.01)
             self._buf[0] = AHT20_CMD_CALIBRATE
             try:
-                self.bus.write_block_data(self.address, int(0), self._buf[:3])
+                self.bus.write_block_data(self.address, 0x0, self._buf[:3])
             except (RuntimeError, OSError):
                 pass
 
