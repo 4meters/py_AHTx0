@@ -55,7 +55,7 @@ class AHTx0:
         with self.bus as bus:
             try:
                 # Newer AHT20's may not succeed with old command, so wrapping in try/except
-                bus.write_block_data(self.address, 0, self._buf[:3])
+                bus.write_block_data(self.address, int(0), self._buf[:3])
             except (RuntimeError, OSError):
                 calibration_failed = True
 
@@ -66,7 +66,7 @@ class AHTx0:
             self._buf[0] = AHT20_CMD_CALIBRATE
             with self.bus as bus:
                 try:
-                    bus.write_block_data(self.address, 0, self._buf[:3])
+                    bus.write_block_data(self.address, int(0), self._buf[:3])
                 except (RuntimeError, OSError):
                     pass
 
