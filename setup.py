@@ -10,7 +10,7 @@ here = os.path.dirname(__file__)
 
 
 def _read_version():
-    with open(os.path.join(here, 'bme280', '__init__.py')) as code:
+    with open(os.path.join(here, 'py_AHTx0', '__init__.py')) as code:
         contents = code.read()
     match = re.search(r'__version__\s*=\s*["\'](.*?)["\']', contents)
     return match.group(1)
