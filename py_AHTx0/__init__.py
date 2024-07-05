@@ -49,8 +49,8 @@ class AHTx0:
     def calibrate(self) -> bool:
         """Ask the sensor to self-calibrate. Returns True on success, False otherwise"""
         self._buf[0] = AHT10_CMD_CALIBRATE
-        self._buf[1] = 0x08
-        self._buf[2] = 0x00
+        self._buf[1] = int(0x08)
+        self._buf[2] = int(0x00)
         calibration_failed = False
         with self.bus as bus:
             try:
