@@ -7,7 +7,6 @@ from setuptools import setup
 
 here = os.path.dirname(__file__)
 
-README = open(os.path.join(here, 'README.rst')).read()
 
 
 def _read_version():
