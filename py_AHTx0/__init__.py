@@ -40,9 +40,8 @@ class AHTx0:
     def reset(self) -> None:
         """Perform a soft-reset of the AHT"""
         self._buf[0] = AHTX0_CMD_SOFTRESET
-        with self.bus as bus:
-            bus.write_block_data(self.address, 0, self._buf[:1])
-            #bus.write(self._buf, start=0, end=1)
+        self.bus.write_block_data(self.address, 0, self._buf[:1])
+        #bus.write(self._buf, start=0, end=1)
         time.sleep(0.02)  # 20ms delay to wake up
 
 
@@ -52,23 +51,21 @@ class AHTx0:
         self._buf[1] = int(0x08)
         self._buf[2] = int(0x00)
         calibration_failed = False
-        with self.bus as bus:
-            try:
-                # Newer AHT20's may not succeed with old command, so wrapping in try/except
-                bus.write_block_data(self.address, int(0), self._buf[:3])
-            except (RuntimeError, OSError):
-                calibration_failed = True
+        try:
+            # Newer AHT20's may not succeed with old command, so wrapping in try/except
+            self.bus.write_block_data(self.address, int(0), self._buf[:3])
+        except (RuntimeError, OSError):
+            calibration_failed = True
 
         if calibration_failed:
             # try another calibration command for newer AHT20's
             # print("Calibration failed, trying AH20 command")
             time.sleep(0.01)
             self._buf[0] = AHT20_CMD_CALIBRATE
-            with self.bus as bus:
-                try:
-                    bus.write_block_data(self.address, int(0), self._buf[:3])
-                except (RuntimeError, OSError):
-                    pass
+            try:
+                self.bus.write_block_data(self.address, int(0), self._buf[:3])
+            except (RuntimeError, OSError):
+                pass
 
         while self.status & AHTX0_STATUS_BUSY:
             time.sleep(0.01)
@@ -79,8 +76,7 @@ class AHTx0:
     @property
     def status(self) -> int:
         """The status byte initially returned from the sensor, see datasheet for details"""
-        with self.bus as bus:
-            self._buf[0] = bus.read_byte(self.address)
+        self._buf[0] = self.bus.read_byte(self.address)
         # print("status: "+hex(self._buf[0]))
         return self._buf[0]
 
@@ -101,13 +97,13 @@ class AHTx0:
         self._buf[0] = AHTX0_CMD_TRIGGER
         self._buf[1] = 0x33
         self._buf[2] = 0x00
-        with self.bus as bus:
-            bus.write_block_data(self.address, 0, self._buf[:3])
-            # i2c.write(self._buf, start=0, end=3)
+        self.bus.write_block_data(self.address, 0, self._buf[:3])
+        # i2c.write(self._buf, start=0, end=3)
+
         while self.status & AHTX0_STATUS_BUSY:
             time.sleep(0.01)
-        with self.bus as bus:
-            self._buf = bus.read_i2c_block_data(self.address, 0, 7)
+
+        self._buf = self.bus.read_i2c_block_data(self.address, 0, 7)
             # i2c.readinto(self._buf, start=0, end=6)
 
         self._humidity = (
