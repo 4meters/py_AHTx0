@@ -1,7 +1,7 @@
 The MIT License (MIT)
 
 Copyright (c) 2020 Kattni Rembor for Adafruit Industries - original code [github.com/adafruit/Adafruit_CircuitPython_AHTx0]
-Copyright (c) 2024 Marcin Ryznar - adapt original code to use smbus library [github.com/4meters/py_AHTx0]
+Copyright (c) 2024 Marcin Ryznar - adapt original code to use smbus2 library [github.com/4meters/py_AHTx0]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
