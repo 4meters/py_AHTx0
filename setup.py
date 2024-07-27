@@ -28,11 +28,11 @@ version = _read_version()
 setup(
     name="py_AHTx0",
     version=version,
-    author="Marcin Ryznar",
+    author="Kattni Rembor, Marcin Ryznar",
     author_email="poczta321123@onet.pl",
     description="A library to drive a AHT10 or AHT20 temperature, humidity sensor over I2C",
     license="MIT",
-    keywords=["raspberry pi", "orange pi", "banana pi", "rpi", "AHT10", "AHT20", "i2c", "temperature", "humidity"],
+    keywords=["raspberry pi", "orange pi", "banana pi", "rpi", "AHT10", "AHT20", "i2c", "temperature", "humidity", "smbus2"],
     packages=['py_AHTx0'],
     install_requires=["smbus2"],
     setup_requires=pytest_runner,

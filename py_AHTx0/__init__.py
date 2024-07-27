@@ -1,6 +1,18 @@
+# SPDX-FileCopyrightText: 2020 Kattni Rembor for Adafruit Industries, 2024 Marcin Ryznar
+#
+# SPDX-License-Identifier: MIT
+
 """
-Raspberry Pi AHTx0 Driver.
+`py_AHTx0`
+=========================================
+
+Python AHTx0 library using smbus2.
+Dependency lightweight
+
+* Author(s): Kattni Rembor, Marcin Ryznar
+
 """
+
 import smbus2
 import time
 
@@ -97,13 +109,11 @@ class AHTx0:
         self._buf[1] = 0x33
         self._buf[2] = 0x00
         self.bus.write_block_data(self.address, 0, self._buf[:3])
-        # i2c.write(self._buf, start=0, end=3)
 
         while self.status & AHTX0_STATUS_BUSY:
             time.sleep(0.01)
 
         self._buf = self.bus.read_i2c_block_data(self.address, 0, 7)
-            # i2c.readinto(self._buf, start=0, end=6)
 
         self._humidity = (
                 (self._buf[1] << 12) | (self._buf[2] << 4) | (self._buf[3] >> 4)
