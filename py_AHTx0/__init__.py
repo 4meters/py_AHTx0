@@ -16,7 +16,7 @@ Dependency lightweight
 import smbus2
 import time
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 DEFAULT_PORT = 0x38
 AHTX0_I2CADDR_DEFAULT: int = 0x38
